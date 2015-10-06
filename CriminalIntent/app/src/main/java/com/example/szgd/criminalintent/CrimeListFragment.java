@@ -7,6 +7,9 @@ import android.os.Bundle;
 import android.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
@@ -101,6 +104,7 @@ public class CrimeListFragment extends Fragment implements AbsListView.OnItemCli
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        setHasOptionsMenu(true);
         getActivity().setTitle(R.string.crime_title);
         mCrimes=CrimeLab.get(getActivity()).getmCrimes();
         mAdapter=new CrimeAdapter(mCrimes);
@@ -117,6 +121,7 @@ public class CrimeListFragment extends Fragment implements AbsListView.OnItemCli
 
         // Set OnItemClickListener so we can be notified on item clicks
         mListView.setOnItemClickListener(this);
+        //getActivity().getActionBar().setDisplayShowHomeEnabled(true);
 
         return view;
     }
@@ -184,5 +189,25 @@ public class CrimeListFragment extends Fragment implements AbsListView.OnItemCli
     public void onResume() {
         super.onResume();
         mAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.fragment_crime_list,menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()){
+            case R.id.menu_item_new_crime:
+                Crime crime=new Crime();
+                CrimeLab.get(getActivity()).addCrime(crime);
+                Intent i=new Intent(getActivity(),CrimeActivity.class);
+                i.putExtra(CrimeFragment.EXTRA_CRIME_ID,crime.getmId());
+                startActivityForResult(i,0);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

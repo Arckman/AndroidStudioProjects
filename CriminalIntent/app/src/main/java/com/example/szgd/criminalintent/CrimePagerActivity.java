@@ -23,11 +23,12 @@ public class CrimePagerActivity extends AppCompatActivity implements CrimeFragme
         setContentView(mViewPager);
         mCrimes=CrimeLab.get(this).getmCrimes();
         FragmentManager fm=getFragmentManager();
-        mViewPager.setAdapter(new FragmentStatePagerAdapter(fm) {
+        mViewPager.setAdapter(new FragmentStatePagerAdapter(null) {//TODO:can not cast
             @Override
             public Fragment getItem(int position) {
                 Crime c=mCrimes.get(position);
-                return (CrimeFragment.newInstance(c.getmId()));
+                //return (CrimeFragment.newInstance(c.getmId()));//TODO:can not cast
+                return null;
             }
 
             @Override

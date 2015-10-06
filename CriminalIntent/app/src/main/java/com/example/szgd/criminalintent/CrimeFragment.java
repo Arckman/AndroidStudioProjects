@@ -6,7 +6,11 @@ import android.os.Bundle;
 import android.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -41,6 +45,7 @@ public class CrimeFragment extends Fragment {
     private Button mDateButton;
     private CheckBox mSolvedCheckBox;
     public static final String EXTRA_CRIME_ID="com.example.szgd.criminalintent.crime_id";
+    private final String CRIME_FRAGMENT_TAG="com.example.szgd.criminalintent.crimefragment";
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
@@ -76,6 +81,7 @@ public class CrimeFragment extends Fragment {
             UUID id= (UUID) getArguments().getSerializable(EXTRA_CRIME_ID);
             mCrime=CrimeLab.get(getActivity()).getCrime(id);
         }
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -113,7 +119,7 @@ public class CrimeFragment extends Fragment {
         mSolvedCheckBox.setChecked(mCrime.ismSolved());
         mTitleField= (EditText) v.findViewById(R.id.crime_title);
         mTitleField.setText(mCrime.getmTitle());
-
+        //getActivity().getActionBar().setDisplayHomeAsUpEnabled(true);
         return v;
     }
 
@@ -156,4 +162,27 @@ public class CrimeFragment extends Fragment {
         public void onFragmentInteraction(Uri uri);
     }
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_crime,menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        }
+        switch(id){
+            case android.R.id.home:
+                Log.d(CRIME_FRAGMENT_TAG,"home actioned!");
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 }
