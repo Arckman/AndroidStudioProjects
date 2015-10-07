@@ -3,14 +3,15 @@
     android:layout_height="match_parent"
     tools:context="com.example.szgd.remotecontrol.RemoteControlFragment"
     android:stretchColumns="*"
-    android:id="@+id/fragment_remote_control_tablelayout">
+    android:id="@+id/fragment_remote_control_tablelayout"
+    android:background="@drawable/remote_background">
 
     <!-- TODO: Update blank fragment layout -->
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:text="0"
+        android:text="0"z
         android:id="@+id/fragment_remote_control_selectedTextView"
         android:layout_weight="2"
         android:layout_gravity="center"
