@@ -27,6 +27,14 @@ public class SwipeViewsWithTabsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.svwt_activity_swipe_views_with_tabs);
 
+        //mViewPager must be assigned before using in onTabSelected() function, or throw null.setCurrentItem Exception!
+        mDemoCollectionPagerAdapter =
+                new DemoCollectionPagerAdapter(
+                        getSupportFragmentManager());
+        mViewPager = (ViewPager) findViewById(R.id.pager);
+        mViewPager.setAdapter(mDemoCollectionPagerAdapter);
+
+
         final ActionBar actionBar = getSupportActionBar();
         // Specify that tabs should be displayed in the action bar.
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
@@ -35,6 +43,9 @@ public class SwipeViewsWithTabsActivity extends AppCompatActivity {
             @Override
             public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft) {
 
+                // When the tab is selected, switch to the
+                // corresponding page in the ViewPager.
+                mViewPager.setCurrentItem(tab.getPosition());
             }
 
             @Override
@@ -48,7 +59,7 @@ public class SwipeViewsWithTabsActivity extends AppCompatActivity {
             }
         };
         // Add 3 tabs, specifying the tab's text and TabListener
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 3; i++) {
             actionBar.addTab(
                     actionBar.newTab()
                             .setText("Tab " + (i + 1))
@@ -58,11 +69,19 @@ public class SwipeViewsWithTabsActivity extends AppCompatActivity {
 
         // ViewPager and its adapters use support library
         // fragments, so use getSupportFragmentManager.
-        mDemoCollectionPagerAdapter =
-                new DemoCollectionPagerAdapter(
-                        getSupportFragmentManager());
-        mViewPager = (ViewPager) findViewById(R.id.pager);
-        mViewPager.setAdapter(mDemoCollectionPagerAdapter);
+
+        mViewPager.setOnPageChangeListener(
+                new ViewPager.SimpleOnPageChangeListener() {
+                    @Override
+                    public void onPageSelected(int position) {
+                        // When swiping between pages, select the
+                        // corresponding tab.
+                        if(position<3)
+                            getSupportActionBar().setSelectedNavigationItem(position);
+                        else
+                            getSupportActionBar().setSelectedNavigationItem(2);
+                    }
+                });
     }
 
     // Since this is an object collection, use a FragmentStatePagerAdapter,
