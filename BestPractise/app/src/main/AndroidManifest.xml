@@ -24,9 +24,17 @@
 
         <!-- activities for InteractionEngagement/ImplementEffectiveNavigation/CreatingSwipeViewsWithTabs -->
         <activity android:name=".interactionengagement.implementeffectivenavigation.swipeviewswithtabs.SwipeViewsWithTabsActivity" >
-            <intent-filter>
+            <!--intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter-->
+        </activity>
+        <!-- activities for InteractionEngagement/ImplementEffectiveNavigation/CreatingANavigationDrawer -->
+        <activity android:name=".interactionengagement.implementeffectivenavigation.anavigationdrawer.ANavigationDrawer"
+            android:theme="@android:style/Theme.Holo">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
